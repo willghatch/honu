@@ -86,3 +86,23 @@
 
                 (+ 2 (* 2 4)))
   )
+
+(honu-tests
+ (check-pred
+  (λ (x) (< 15 x 16))
+  ;; The following code is taken from the GPCE 2012 Honu paper
+  @honu{
+    function derivative(f) {
+      function (pt) {
+        (f(pt + 0.001) - f(pt)) / 0.001
+      }
+    }
+
+    macro D(){ z:id, math:expression } {
+      syntax(derivative(function (z) { math }))
+    }
+
+    var df = D x, x * x - 5 * x + 8
+    df(10) // 15.099
+    }
+  ))
